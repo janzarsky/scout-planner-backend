@@ -4,7 +4,8 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "mongo": "podman run -ti --rm -p 27017-27019:27017-27019 -v $(pwd)/db:/data/db mongo"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

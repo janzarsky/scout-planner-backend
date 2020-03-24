@@ -1,36 +1,45 @@
 'use strict';
 
+var mongoose = require('mongoose'),
+  Program = mongoose.model('Programs');
+
 exports.get_all_programs = function(req, res) {
-  res.json([
-    {
-      id: 'test1',
-      begin: Date.parse('2020-06-12T12:00:00.000+00:00'),
-      duration: 2*60*60*1000,
-      title: 'Test 1',
-      pkg: 'or',
-      people: ['walker', 'gabca'],
-    },
-    {
-      id: 'test2',
-      begin: Date.parse('2020-06-14T09:15:00.000+00:00'),
-      duration: 2*60*60*1000,
-      title: 'Test 2',
-      pkg: 'psy',
-      people: [],
-    },
-    {
-      id: 'test3',
-      begin: Date.parse('2020-08-18T17:35:00.000+00:00'),
-      duration: 2*60*60*1000,
-      title: 'Test 3',
-      pkg: 'hosp',
-      people: ['verca'],
-    },
-    {
-      id: 'invalid1',
-      begin: Date.parse('2020-03-18T17:00:00.000+00:00'),
-      duration: 2*60*60*1000,
-      title: 'Invalid date',
-    },
-  ]);
+  Program.find({}, function(err, programs) {
+    if (err)
+      res.send(err);
+    res.json(programs);
+  });
+};
+
+exports.create_program = function(req, res) {
+  var new_prog = new Program(req.body);
+  new_prog.save(function(err, program) {
+    if (err)
+      res.send(err);
+    res.json(program);
+  });
+};
+
+exports.delete_program = function(req, res) {
+  Program.remove({ _id: req.params.id }, function(err, program) {
+    if (err)
+      res.send(err);
+    res.json({ message: 'Program successfully deleted' });
+  });
+};
+
+exports.get_program = function(req, res) {
+  Program.findById(req.params.id, function(err, program) {
+    if (err)
+      res.send(err);
+    res.json(program);
+  });
+};
+
+exports.update_program = function(req, res) {
+  Program.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}, function(err, program) {
+    if (err)
+      res.send(err);
+    res.json(program);
+  });
 };
