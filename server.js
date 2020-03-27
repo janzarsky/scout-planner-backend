@@ -4,6 +4,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Program = require('./api/models/programModel'),
   Pkg = require('./api/models/pkgModel'),
+  Rule = require('./api/models/ruleModel'),
   bodyParser = require('body-parser'),
   cors = require('cors');
 

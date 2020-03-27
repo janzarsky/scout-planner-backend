@@ -22,4 +22,15 @@ module.exports = function(app) {
     .get(pkgs.get_pkg)
     .put(pkgs.update_pkg)
     .delete(pkgs.delete_pkg);
+
+  var rules = require('../controllers/rulesController.js');
+
+	app.route('/rules')
+		.get(rules.get_all_rules)
+    .post(rules.create_rule);
+
+	app.route('/rules/:id')
+    .get(rules.get_rule)
+    .put(rules.update_rule)
+    .delete(rules.delete_rule);
 };
